@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Nifty Alpha Prime 2026 — Premium Nifty 50 stock analysis dashboard with AI-powered sentiment, CAGR calculations, fundamentals, and buy/sell recommendations.">
+    <title>Nifty Alpha Prime 2026 — India's Smartest Stock Dashboard</title>
+    
+    <!-- Google Fonts: IBM Plex Sans (UI) & IBM Plex Mono (Data) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:ital,wght@0,400;0,500;0,600;0,700&family=IBM+Plex+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <!-- React & ReactDOM -->
+    <script crossorigin src="https://unpkg.com/react@18/umd/react.development.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+    
+    <!-- Babel for on-the-fly JSX transpilation -->
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <style>
+        /* ==========================================
+           NIFTY ALPHA PRIME — KOTAK NEO DESIGN SYSTEM
+           Premium Dark Terminal Aesthetic
+           ========================================== */
+
+        *, *::before, *::after {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --bg-base: #060A10;
+            --bg-surface: #0C1118;
+            --bg-card: #111821;
+            --bg-card-hover: #161E2A;
+            --bg-sidebar: #0A0F16;
+            --border: rgba(255,255,255,0.06);
+            --border-active: rgba(232,169,48,0.4);
+
+            --text-primary: rgba(255,255,255,0.92);
+            --text-secondary: rgba(255,255,255,0.45);
+            --text-muted: rgba(255,255,255,0.25);
+
+            --amber: #E8A930;
+            --teal: #2DD4A0;
+            --red: #FF5E5E;
+            --blue: #59A0EB;
+            --violet: #A78BFA;
+
+            --font-ui: 'IBM Plex Sans', -apple-system, sans-serif;
+            --font-data: 'IBM Plex Mono', monospace;
+        }
+
+        html { scroll-behavior: smooth; }
+
+        body {
+            font-family: var(--font-ui);
+            background: var(--bg-base);
+            color: var(--text-primary);
+            -webkit-font-smoothing: antialiased;
+            overflow-x: hidden;
+        }
+
+        /* Scrollbar */
+        ::-webkit-scrollbar { width: 6px; height: 6px; }
+        ::-webkit-scrollbar-track { background: var(--bg-base); }
+        ::-webkit-scrollbar-thumb { background: #253344; border-radius: 3px; }
+        ::-webkit-scrollbar-thumb:hover { background: var(--blue); }
+
+        /* Animations */
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: translateY(0); } }
+        @keyframes slideUp { from { opacity: 0; transform: translateY(24px); } to { opacity: 1; transform: translateY(0); } }
+        @keyframes shimmer {
+            0% { background-position: -200% 0; }
+            100% { background-position: 200% 0; }
+        }
+        @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.4; } }
+        @keyframes glow { 0%, 100% { box-shadow: 0 0 8px rgba(232,169,48,0.2); } 50% { box-shadow: 0 0 20px rgba(232,169,48,0.4); } }
+
+        .shimmer-bg {
+            background: linear-gradient(90deg, var(--bg-card) 25%, #1A2433 50%, var(--bg-card) 75%);
+            background-size: 200% 100%;
+            animation: shimmer 1.5s infinite linear;
+        }
+
+        .animate-in { animation: fadeIn 0.4s ease-out forwards; }
+        .animate-slide { animation: slideUp 0.5s ease-out forwards; }
+    </style>
+</head>
+<body>
+    <div id="root"></div>
+    <script type="text/babel" src="./app.jsx"></script>
+</body>
+</html>

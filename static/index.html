@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Sentinel — A premium Nifty 50 stock analysis dashboard with real-time fundamentals, CAGR, valuation verdicts, and buy/sell recommendations.">
+    <title>Sentinel | Nifty 50 Stock Dashboard</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/style.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+</head>
+<body>
+
+    <!-- ====== TOP NAVIGATION ====== -->
+    <nav id="main-nav">
+        <div class="nav-inner">
+            <div class="brand">
+                <span class="brand-icon">◈</span>
+                <span class="brand-text">Sentinel</span>
+                <span class="brand-tag">NIFTY 50</span>
+            </div>
+            <div class="search-wrapper" id="search-wrapper">
+                <svg class="search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+                <input type="text" id="search-input" placeholder="Search stocks… e.g. Reliance, TCS, Infosys" autocomplete="off">
+                <div id="search-results" class="search-results hidden"></div>
+            </div>
+            <div class="nav-meta">
+                <span class="meta-pill" id="stock-count-pill">0 stocks</span>
+                <span class="meta-pill live-pulse">● LIVE DATA</span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- ====== HERO SECTION ====== -->
+    <header id="hero">
+        <div class="hero-content">
+            <h1>India's Top 50 Stocks.<br><span class="gradient-text">Decoded for Everyone.</span></h1>
+            <p class="hero-sub">Real fundamentals. Plain English explanations. Clear buy or sell verdicts — powered by data, not hype.</p>
+        </div>
+        <div class="hero-glow"></div>
+    </header>
+
+    <!-- ====== STOCK GRID ====== -->
+    <main id="stock-grid-section">
+        <div class="section-header">
+            <h2>All Nifty 50 Stocks</h2>
+            <div class="filter-pills">
+                <button class="pill active" data-filter="all">All</button>
+                <button class="pill" data-filter="buy">🟢 Buy</button>
+                <button class="pill" data-filter="sell">🔴 Sell</button>
+                <button class="pill" data-filter="hold">🟡 Hold</button>
+            </div>
+        </div>
+        <div id="stock-grid" class="stock-grid">
+            <!-- JS will populate -->
+            <div class="loading-state">
+                <div class="spinner"></div>
+                <p>Loading Nifty 50 data…</p>
+            </div>
+        </div>
+    </main>
+
+    <!-- ====== DETAILED STOCK MODAL ====== -->
+    <div id="stock-modal" class="modal-overlay hidden">
+        <div class="modal-container">
+            <button id="modal-close" class="modal-close" aria-label="Close modal">&times;</button>
+            
+            <div class="modal-header">
+                <div>
+                    <h2 id="modal-ticker" class="modal-ticker">RELIANCE.NS</h2>
+                    <span id="modal-sector" class="modal-sector">Energy</span>
+                </div>
+                <div class="modal-price-block">
+                    <span id="modal-price" class="modal-price">₹0</span>
+                    <span id="modal-verdict-badge" class="verdict-badge">—</span>
+                </div>
+            </div>
+
+            <!-- Recommendation Banner -->
+            <div id="recommendation-banner" class="recommendation-banner">
+                <div class="rec-icon" id="rec-icon">●</div>
+                <div class="rec-content">
+                    <span class="rec-label">Our Verdict</span>
+                    <span class="rec-action" id="rec-action">HOLD</span>
+                    <p class="rec-reason" id="rec-reason">Based on valuation and risk analysis</p>
+                </div>
+            </div>
+
+            <!-- Chart + Pie side-by-side -->
+            <div class="modal-charts">
+                <div class="chart-card">
+                    <h3>90-Day Price Trend</h3>
+                    <div class="chart-container">
+                        <canvas id="price-chart"></canvas>
+                    </div>
+                </div>
+                <div class="chart-card pie-card">
+                    <h3>Nifty 50 Market Share</h3>
+                    <canvas id="market-pie"></canvas>
+                    <p id="pie-label" class="pie-label"></p>
+                </div>
+            </div>
+
+            <!-- Fundamentals Grid -->
+            <div class="modal-section">
+                <h3>Key Fundamentals <span class="info-badge" title="These numbers tell you how healthy and profitable a company is">ℹ️ What do these mean?</span></h3>
+                <div id="fundamentals-grid" class="fundamentals-grid">
+                    <!-- JS renders metric cards -->
+                </div>
+            </div>
+
+            <!-- CAGR Section -->
+            <div class="modal-section cagr-section">
+                <h3>CAGR — Compound Annual Growth Rate</h3>
+                <div class="cagr-card">
+                    <div class="cagr-value" id="cagr-value">0%</div>
+                    <p class="cagr-explain">CAGR tells you the <strong>steady, average return this stock has generated per year</strong> over the last 2 years. Think of it as: "If your money grew smoothly without ups and downs, this is the annual % it would have grown." A CAGR above 15% is considered strong for Indian equities.</p>
+                </div>
+            </div>
+
+            <!-- Valuation & Risk -->
+            <div class="modal-section">
+                <h3>Valuation & Risk Assessment</h3>
+                <div class="assessment-grid">
+                    <div class="assess-card" id="valuation-card">
+                        <span class="assess-label">Valuation</span>
+                        <span class="assess-value" id="val-verdict">—</span>
+                        <p class="assess-explain" id="val-explain"></p>
+                    </div>
+                    <div class="assess-card" id="risk-card">
+                        <span class="assess-label">Risk Profile</span>
+                        <span class="assess-value" id="risk-verdict">—</span>
+                        <p class="assess-explain" id="risk-explain"></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer id="main-footer">
+        <p>Sentinel Dashboard &copy; 2026 &mdash; Data sourced via Yahoo Finance. This is for educational analysis only, not financial advice.</p>
+    </footer>
+
+    <script src="/app.js"></script>
+</body>
+</html>

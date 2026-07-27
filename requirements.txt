@@ -1,0 +1,11 @@
+flask
+flask-cors
+yfinance
+pandas
+numpy
+statsmodels
+transformers
+torch
+scipy
+beautifulsoup4
+requests
